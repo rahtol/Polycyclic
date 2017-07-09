@@ -115,7 +115,7 @@ PcpOrbitStabilizer := function( e, pcp, act, op )
         # compute stabiliser element
         if rels[i] = 0 or s < rels[i] then
             if j = 1 then
-                Add( stab, pcp[i]^s );
+                Add( stab, pcp[i]^s );  #$ gives a collected word in the generators
                 Add( word, [[i,s]] );
             else
                 t := TransversalInverse(j, trels);
