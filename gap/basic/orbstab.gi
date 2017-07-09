@@ -62,6 +62,10 @@ end;
 ## Warning: this function runs forever, if the orbit is infinite!
 ##
 # FIXME: This function is documented and should be turned into a GlobalFunction
+#$ e :-> the point (i.e. vector) for which stabilizer and orbit are to be calculated
+#$ pcp :-> polycyclic presentation sequence of the acting group
+#$ act :-> list of matrices defining the action on the point spaces (typically the module Z^d for some d)
+#$ op :-> function implementing the action
 PcpOrbitStabilizer := function( e, pcp, act, op )
     local  rels, orbit, trans, trels, tword, stab, word, w, i, f, j, n, t, s;
 
@@ -94,7 +98,7 @@ PcpOrbitStabilizer := function( e, pcp, act, op )
         while IsBool( j ) do
             n := List( n, x -> op( x, act[i] ) );
             Append( t, n );
-            j := Position( orbit, op( n[1], act[i] ) );
+            j := Position( orbit, op( n[1], act[i] ) ); #$ is act[i]^(s+1) already on the orbit ?
             s := s + 1;
         od;
 
@@ -111,7 +115,7 @@ PcpOrbitStabilizer := function( e, pcp, act, op )
         # compute stabiliser element
         if rels[i] = 0 or s < rels[i] then
             if j = 1 then
-                Add( stab, pcp[i]^s );
+                Add( stab, pcp[i]^s );  #$ gives a collected word in the generators
                 Add( word, [[i,s]] );
             else
                 t := TransversalInverse(j, trels);
